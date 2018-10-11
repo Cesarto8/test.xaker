@@ -46,7 +46,8 @@ $(document).ready(function () {
   height = $(window).height() - offsete.top - 5;
   $('.slider').height(height);
   // Slider manual
-  var num_slider = $('.slider_container .slider_items').length;
+  var num_slider = $('.slider_container').children('.slider_items').length;
+  console.log(num_slider);
   var imgPos = 1;
   for (var aux = 1; aux <= num_slider; aux++) {
     $('.pagination').append('<div class="item_pagination"><i class="material-icons">fiber_manual_record</i></div>');
