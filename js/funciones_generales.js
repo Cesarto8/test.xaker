@@ -46,57 +46,67 @@ $(document).ready(function () {
   height = $(window).height() - offsete.top - 5;
   $('.slider').height(height);
   // Slider manual
-  var num_slider = $('.slider_container').children('.slider_items').length;
-  console.log(num_slider);
-  var imgPos = 1;
-  for (var aux = 1; aux <= num_slider; aux++) {
-    $('.pagination').append('<div class="item_pagination"><i class="material-icons">fiber_manual_record</i></div>');
-  }
-  $('.slider_container .slider_items').hide();
-  $('.slider_container .slider_items:first').show();
-  $('.pagination .item_pagination:first').css('color', 'rgba(255, 255, 255, 0.5)');
-  $('.pagination .item_pagination').click(pagination);
-  $('.next_btn').click(next_slider);
-  $('.back_btn').click(back_slider);
+  // init
+  slider('.slider', 'yes', '5000');
+  slider('.slider_2', 'no', '0');
 
-  function pagination() {
-    var paginationPos = $(this).index() + 1;
-    $('.slider_container .slider_items').hide();
-    $('.slider_container .slider_items:nth-child(' + paginationPos + ')').fadeIn();
-    $('.pagination .item_pagination').css('color', 'rgba(255, 255, 255, 0.3)');
-    $(this).css('color', 'rgba(255, 255, 255, 0.5)');
-    imgPos = paginationPos;
-  }
-  var itervalo = null;
-
-  function next_slider() {
-    clearInterval(itervalo);
-    if (imgPos >= num_slider) {
-      imgPos = 1;
-    } else {
-      imgPos++;
+  function slider(selector, auto, time) {
+    var modulo = $(selector + ' .slider_container')[0].children;
+    var num_slider = modulo.length;
+    var imgPos = 1;
+    for (var aux = 1; aux <= num_slider; aux++) {
+      $(selector + ' .pagination').append('<div class="item_pagination"><i class="material-icons">fiber_manual_record</i></div>');
     }
-    $('.pagination .item_pagination').css('color', 'rgba(255, 255, 255, 0.3)');
-    $('.pagination .item_pagination:nth-child(' + imgPos + ')').css('color', 'rgba(255, 255, 255, 0.5)');
-    $('.slider_container .slider_items').hide();
-    $('.slider_container .slider_items:nth-child(' + imgPos + ')').fadeIn();
-    // itervalo = setInterval(next_slider, 5000);
-  }
+    $(selector + ' .slider_container .slider_items').hide();
+    $(selector + ' .slider_container .slider_items:first').show();
+    $(selector + ' .pagination .item_pagination:first').css('color', 'rgba(255, 255, 255, 0.5)');
+    $(selector + ' .pagination .item_pagination').click(pagination);
+    $(selector + ' .next_btn').click(next_slider);
+    $(selector + ' .back_btn').click(back_slider);
 
-  function back_slider() {
-    clearInterval(itervalo);
-    if (imgPos <= 1) {
-      imgPos = num_slider;
-    } else {
-      imgPos--;
+    function pagination() {
+      var paginationPos = $(this).index() + 1;
+      $(selector + ' .slider_container .slider_items').hide();
+      $(selector + ' .slider_container .slider_items:nth-child(' + paginationPos + ')').fadeIn();
+      $(selector + ' .pagination .item_pagination').css('color', 'rgba(255, 255, 255, 0.3)');
+      $(this).css('color', 'rgba(255, 255, 255, 0.5)');
+      imgPos = paginationPos;
     }
-    $('.pagination .item_pagination').css('color', 'rgba(255, 255, 255, 0.3)');
-    $('.pagination .item_pagination:nth-child(' + imgPos + ')').css('color', 'rgba(255, 255, 255, 0.5)');
-    $('.slider_container .slider_items').hide();
-    $('.slider_container .slider_items:nth-child(' + imgPos + ')').fadeIn();
-    itervalo = setInterval(next_slider, 5000);
-  }
+    var itervalo = null;
+    if (auto == 'yes') {
+      itervalo = setInterval(next_slider, time);
+    }
 
+    function next_slider() {
+      clearInterval(itervalo);
+      if (imgPos >= num_slider) {
+        imgPos = 1;
+      } else {
+        imgPos++;
+      }
+      $(selector + ' .pagination .item_pagination').css('color', 'rgba(255, 255, 255, 0.3)');
+      $(selector + ' .pagination .item_pagination:nth-child(' + imgPos + ')').css('color', 'rgba(255, 255, 255, 0.5)');
+      $(selector + ' .slider_container .slider_items').hide();
+      $(selector + ' .slider_container .slider_items:nth-child(' + imgPos + ')').fadeIn();
+      if (auto == 'yes') {
+        itervalo = setInterval(next_slider, time);
+      }
+    }
+
+    function back_slider() {
+      clearInterval(itervalo);
+      if (imgPos <= 1) {
+        imgPos = num_slider;
+      } else {
+        imgPos--;
+      }
+      $(selector + ' .pagination .item_pagination').css('color', 'rgba(255, 255, 255, 0.3)');
+      $(selector + ' .pagination .item_pagination:nth-child(' + imgPos + ')').css('color', 'rgba(255, 255, 255, 0.5)');
+      $(selector + ' .slider_container .slider_items').hide();
+      $(selector + ' .slider_container .slider_items:nth-child(' + imgPos + ')').fadeIn();
+      itervalo = setInterval(next_slider, 5000);
+    }
+  }
   /////////////////////////////////////////////////////////////////////////////////////////////
   $('.modal_reserva').click(function () {
     console.log('hey');
