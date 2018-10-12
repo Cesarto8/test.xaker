@@ -87,6 +87,18 @@ body {
 	justify-content: space-between;
 }
 
+.back_btn {
+	position: absolute;
+	top: calc(50% - 17.5px);
+	left: 10px;
+}
+
+.next_btn {
+	position: absolute;
+	top: calc(50% - 17.5px);
+	right: 10px;
+}
+
 .card .card-action a,
 .caption a {
 	width: 100%;
